@@ -1,0 +1,6 @@
+{
+	"appId": "eu.ydns.terna",
+	"appName": "ternaui",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

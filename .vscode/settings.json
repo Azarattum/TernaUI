@@ -1,0 +1,6 @@
+{
+  "stylelint.validate": ["css", "postcss", "svelte"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": true
+  }
+}

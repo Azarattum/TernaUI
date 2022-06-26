@@ -1,15 +1,31 @@
-import adapter from '@sveltejs/adapter-auto';
-import preprocess from 'svelte-preprocess';
+import adapter from "@sveltejs/adapter-static";
+import preprocess from "svelte-preprocess";
+import mixins from "postcss-mixins";
+import nested from "postcss-nested";
+import autoprefixer from "autoprefixer";
+import { resolve } from "path";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// Consult https://github.com/sveltejs/svelte-preprocess
-	// for more information about preprocessors
-	preprocess: preprocess(),
+  preprocess: preprocess({
+    postcss: {
+      plugins: [
+        mixins({
+          mixinsDir: resolve("./src/lib/ui/"),
+        }),
+        nested,
+        autoprefixer,
+      ],
+    },
+  }),
 
-	kit: {
-		adapter: adapter()
-	}
+  kit: {
+    alias: {
+      $stores: "src/stores",
+    },
+    prerender: { default: true },
+    adapter: adapter(),
+  },
 };
 
 export default config;
