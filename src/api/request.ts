@@ -9,7 +9,6 @@ const gretch = create({
     "Content-Type": "application/x-www-form-urlencoded",
   },
   method: "POST",
-  credentials: "include",
 }) as <T = any, A = Error>(
   url: string,
   opts?: GretchOptions
