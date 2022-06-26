@@ -14,7 +14,8 @@ async function register(email: string, login: string, password: string) {
 }
 
 async function publish(lang: string, text: string, feat?: number) {
-  const data = await call<Login>("publish", { lang, text, feat });
+  const sid = await get(token);
+  const data = await call<Login>("publish", { lang, text, feat, sid });
   if (!data) return;
   if (get(hero)) return;
   wall.update();

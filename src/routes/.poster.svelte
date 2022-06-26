@@ -1,0 +1,154 @@
+<script context="module">
+  export let open = writable(false);
+</script>
+
+<script lang="ts">
+  import { publish } from "$api/functions";
+
+  import { pannable } from "$lib/actions/pannable";
+  import Title from "$lib/ui/title.svelte";
+  import hljs from "highlight.js";
+  import { writable } from "svelte/store";
+
+  $: if ($open) panel?.click();
+  else handle?.click();
+
+  let editor: HTMLElement | undefined;
+  let handle: HTMLElement | undefined;
+  let panel: HTMLElement | undefined;
+  let registration = false;
+
+  let lang = "css";
+  let text = "";
+
+  $: colored = hljs.highlight(text, { language: lang }).value;
+
+  async function handlePublish() {
+    await publish(lang, text);
+    $open = false;
+  }
+</script>
+
+<section
+  use:pannable={{ gap: 16, handle: ".settings-handle" }}
+  bind:this={panel}
+  on:open={() => ($open = true)}
+  on:close={() => ($open = false)}
+  style:opacity={+$open}
+  style:pointer-events={$open ? "all" : "none"}
+>
+  <div class="settings-handle" on:click|stopPropagation />
+  <Title text="Post" />
+  <select bind:value={lang}>
+    <option value="js">JavaScript</option>
+    <option value="css">CSS</option>
+  </select>
+  <article>
+    <pre
+      bind:this={editor}
+      class="language-{lang}"
+      name="code">{@html colored}</pre>
+    <textarea bind:value={text} />
+  </article>
+
+  <button class="primary" on:click={handlePublish}>Publish</button>
+</section>
+
+<style lang="postcss">
+  section {
+    @mixin material-glass;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    position: fixed;
+    bottom: calc(-1 * 100vh - 16px);
+
+    width: 100%;
+    height: 100vh;
+    max-width: 100%;
+
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+
+    z-index: 2000;
+  }
+
+  .settings-handle {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 35px;
+    height: 5px;
+
+    margin: 12px 0 8px 0;
+
+    background-color: var(--color-text-caption);
+    border-radius: 5px;
+
+    cursor: pointer;
+  }
+
+  button {
+    margin-bottom: 3rem !important;
+
+    font-size: 1.5rem;
+
+    &.primary {
+      color: white;
+      background-color: var(--color-content);
+    }
+  }
+
+  select,
+  button {
+    display: block;
+
+    padding: 0.5rem;
+    margin: 1rem;
+    border: var(--border-glass);
+
+    border-radius: 8px;
+    appearance: none;
+  }
+
+  pre {
+    height: 100%;
+    padding: 0.5rem;
+    margin: 0;
+  }
+
+  article {
+    position: relative;
+
+    height: 100%;
+    margin: 1rem;
+
+    font-family: monospace;
+    font-size: 18px;
+
+    border-radius: 8px;
+
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+  }
+
+  textarea {
+    position: absolute;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem;
+    border: none;
+
+    font-family: monospace;
+    font-size: 18px;
+
+    color: transparent;
+    background-color: transparent;
+    outline: none;
+    caret-color: black;
+  }
+</style>

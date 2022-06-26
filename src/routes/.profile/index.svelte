@@ -3,9 +3,17 @@
   import Posts from "$lib/components/posts.svelte";
   import Spinner from "$lib/ui/spinner.svelte";
   import Title from "$lib/ui/title.svelte";
-  import { profile, wall } from "$api/stores";
+  import { hero, profile, wall } from "$api/stores";
   import Stat from "./stat.svelte";
   import Bio from "./bio.svelte";
+  import Icon from "$lib/ui/icon.svelte";
+  import { open } from "../.poster.svelte";
+
+  $: mine = $hero == undefined;
+
+  function handlePost() {
+    open.set(true);
+  }
 </script>
 
 {#await $profile}
@@ -24,6 +32,9 @@
     </div>
   </section>
   <hr />
+  {#if mine}
+    <button on:click={handlePost}><Icon name="plus" /></button>
+  {/if}
   {#await $wall}
     <Spinner />
   {:then wall}
@@ -31,7 +42,7 @@
   {/await}
 {/await}
 
-<style>
+<style lang="postcss">
   section {
     display: flex;
     gap: 16px;
@@ -50,5 +61,22 @@
     justify-content: space-between;
 
     width: 100%;
+  }
+
+  button {
+    display: block;
+
+    width: calc(100% - 2rem);
+    padding: 0.5rem;
+    margin: 1rem;
+
+    border: var(--border-glass);
+
+    background: none;
+    border-radius: 8px;
+
+    &:active {
+      background-color: hsla(0, 0%, 70%, 0.6);
+    }
   }
 </style>

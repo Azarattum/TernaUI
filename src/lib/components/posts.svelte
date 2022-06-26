@@ -7,4 +7,5 @@
 
 {#each posts as post}
   <Post {...post} />
+  <hr />
 {/each}

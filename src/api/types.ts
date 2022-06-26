@@ -14,11 +14,10 @@ export interface Query {
 
 export type Profile = typeof nullProfile;
 export const nullProfile = {
-  id: 42,
-  nickname: "MrPutin",
-  avatar:
-    "body { background: mediumpurple; display: flex; place-content: center; } body::after { content: ''; width: 10px; height: 10px; display: block; background: white; border-radius: 100% }",
-  bio: "Hello. My name is Mr. Putin. This is my test profile description",
+  id: 0,
+  nickname: "",
+  avatar: "",
+  bio: "Loading...",
   bugs: 0,
   features: 0,
   forks: 0,
@@ -27,6 +26,7 @@ export const nullProfile = {
 export type Post = typeof nullPost;
 export const nullPost = {
   id: 0,
+  mark: 1 as 1 | -1 | 0,
   author: {
     nickname: "Coder1337",
     avatar: "body { background: green; }",
@@ -48,6 +48,6 @@ export const nullPost = {
 
 export type Search = typeof nullSearch;
 export const nullSearch = {
-  users: [nullProfile],
-  posts: [nullPost],
+  users: [] as Profile[],
+  posts: [] as Post[],
 };

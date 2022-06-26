@@ -7,6 +7,7 @@
   import { onMount } from "svelte";
 
   export let id: number;
+  export let mark: number;
   export let author: { nickname: string; avatar: string; user: number };
   export let parent:
     | { post: number; nickname: string; user: number }
@@ -40,13 +41,12 @@
       </span>
     {/if}
   </header>
-  <code bind:this={code} class="language-{data.lang}">
-    {data.text}
-  </code>
+  <pre><code bind:this={code} class="language-{data.lang}">{data.text}</code
+    ></pre>
   <footer>
     <div>
-      <Stat icon="puzzle-piece" value={data.features} />
-      <Stat icon="bug" value={data.bugs} />
+      <Stat active={mark === 1} icon="puzzle-piece" value={data.features} />
+      <Stat active={mark === -1} icon="bug" value={data.bugs} />
     </div>
     <button>
       <Stat icon="share" value={data.forks} />
@@ -71,6 +71,10 @@
     margin: 0.3rem 0.3rem;
 
     opacity: 0.6;
+  }
+
+  pre {
+    margin: 0;
   }
 
   code {

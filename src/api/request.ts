@@ -25,12 +25,8 @@ export async function call<T>(
     (key) => options[key] == null && delete options[key]
   );
 
-  const sid = options["sid"];
-  delete options["sid"];
-
   const { error, data } = await gretch<T>(action(method), {
     signal,
-    // headers: { sid },
     body: new URLSearchParams(options),
   }).json();
 

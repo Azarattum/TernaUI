@@ -6,6 +6,7 @@
   import { route } from "$api/stores";
   import Tabbar from "$lib/ui/tabbar.svelte";
   import Login from "./.login.svelte";
+  import Poster from "./.poster.svelte";
   import Search from "./.search.svelte";
   import Feed from "./.feed.svelte";
   import { onMount } from "svelte";
@@ -33,3 +34,4 @@
   <Tabbar />
 </Router>
 <Login />
+<Poster />

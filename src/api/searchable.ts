@@ -21,6 +21,7 @@ export function searchable(query: Readable<Query | undefined>) {
   return asyncable([token, query], async (signal, [sid, query]) => {
     if (!query) return { users: [], posts: [] };
     const data = await request(sid, query, signal);
+    if (!data.posts.length) return cache;
 
     anchor = data.posts[data.posts.length - 1].id;
     cache.push(...data.posts);

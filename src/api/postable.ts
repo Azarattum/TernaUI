@@ -1,4 +1,4 @@
-import { nullPost, type Post } from "./types";
+import type { Post } from "./types";
 import type { Readable } from "svelte/store";
 import { asyncable } from "$lib/asyncable";
 import { profile, token } from "./stores";
@@ -12,8 +12,7 @@ export function postable(user: Readable<string | undefined>, feed = false) {
     sid: string,
     user: string | undefined,
     signal: AbortSignal
-  ) =>
-    (await call<Post[]>("posts", { sid, user, anchor }, signal)) || [nullPost];
+  ) => (await call<Post[]>("posts", { sid, user, anchor }, signal)) || [];
 
   //Reset anchor when user changes
   // eslint-disable-next-line prefer-const
@@ -29,6 +28,7 @@ export function postable(user: Readable<string | undefined>, feed = false) {
     async (signal, [sid, user, profile]) => {
       if (!feed && !user) user = profile.id.toString();
       const data = await request(sid, user, signal);
+      if (!data.length) return cache;
 
       anchor = data[data.length - 1].id;
       cache.push(...data);
