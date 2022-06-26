@@ -39,9 +39,13 @@
 {/await}
 
 <style lang="postcss">
+  section > :global(:nth-child(2)) {
+    margin-left: 1rem;
+  }
+
   section {
     display: flex;
-    gap: 16px;
+    /* gap: 16px; */
 
     margin: 16px;
   }

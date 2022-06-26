@@ -99,9 +99,13 @@
     margin-bottom: 0.5rem;
   }
 
+  section > :global(:first-child) {
+    margin-right: 1rem;
+  }
+
   section {
     display: flex;
-    gap: 1rem;
+    /* gap: 1rem; */
     align-items: center;
   }
 
@@ -134,9 +138,13 @@
     margin: 1rem;
   }
 
+  div > :global(:first-child) {
+    margin-right: 1rem;
+  }
+
   div {
     display: flex;
-    gap: 1rem;
+    /* gap: 1rem; */
   }
 
   footer {
