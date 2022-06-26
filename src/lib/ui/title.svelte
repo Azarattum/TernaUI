@@ -1,9 +1,12 @@
 <script lang="ts">
   import { ready } from "$lib/asyncable";
   import { page } from "$api/stores";
+
+  export let text: string | undefined = undefined;
+  $: value = text == null ? (ready($page) ? $page : "") : text;
 </script>
 
-<h1>{ready($page) ? $page : ""}</h1>
+<h1>{value}</h1>
 
 <style>
   h1 {

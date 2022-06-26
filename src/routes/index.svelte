@@ -5,6 +5,7 @@
   import Navbar from "$lib/ui/navbar.svelte";
   import { route } from "$api/stores";
   import Tabbar from "$lib/ui/tabbar.svelte";
+  import Login from "./.login.svelte";
   import Search from "./.search.svelte";
   import Feed from "./.feed.svelte";
   import { onMount } from "svelte";
@@ -14,7 +15,6 @@
     window.addEventListener("hashchange", () => {
       route.set(location.hash);
     });
-    // login("test", "test1234");
   });
 </script>
 
@@ -32,3 +32,4 @@
   </Page>
   <Tabbar />
 </Router>
+<Login />
