@@ -118,7 +118,8 @@
     font-size: 1.5rem;
 
     &.primary {
-      filter: invert();
+      color: white;
+      background-color: var(--color-content);
     }
   }
 
