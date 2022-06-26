@@ -119,7 +119,7 @@
 
     margin: 12px 0 8px 0;
 
-    background-color: var(--color-text-caption);
+    background-color: grey;
     border-radius: 5px;
 
     cursor: pointer;
