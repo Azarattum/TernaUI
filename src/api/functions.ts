@@ -1,5 +1,5 @@
 import { hero, token, wall } from "./stores";
-import type { Login } from "./types";
+import type { Feedback, Login } from "./types";
 import { get } from "svelte/store";
 import { call } from "./request";
 
@@ -21,4 +21,14 @@ async function publish(lang: string, text: string, feat?: number) {
   wall.update();
 }
 
-export { login, register, publish };
+async function like(post: number) {
+  const sid = await get(token);
+  return await call<Feedback>("feature", { post, sid });
+}
+
+async function dislike(post: number) {
+  const sid = await get(token);
+  return await call<Feedback>("bug", { post, sid });
+}
+
+export { login, register, publish, like, dislike };

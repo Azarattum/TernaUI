@@ -5,6 +5,7 @@
   import "highlight.js/styles/github.css";
   import hljs from "highlight.js";
   import { onMount } from "svelte";
+  import { dislike, like } from "$api/functions";
 
   export let id: number;
   export let mark: number;
@@ -25,6 +26,24 @@
   onMount(() => {
     hljs.highlightElement(code);
   });
+
+  async function handleLike() {
+    const response = await like(id);
+    if (!response) return;
+    const { bugs, features, mark: state } = response;
+    data.bugs = bugs;
+    data.features = features;
+    mark = state;
+  }
+
+  async function handleDislike() {
+    const response = await dislike(id);
+    if (!response) return;
+    const { bugs, features, mark: state } = response;
+    data.bugs = bugs;
+    data.features = features;
+    mark = state;
+  }
 </script>
 
 <article class="post-{id}">
@@ -45,8 +64,18 @@
     ></pre>
   <footer>
     <div>
-      <Stat active={mark === 1} icon="puzzle-piece" value={data.features} />
-      <Stat active={mark === -1} icon="bug" value={data.bugs} />
+      <Stat
+        on:click={handleLike}
+        active={mark === 1}
+        icon="puzzle-piece"
+        value={data.features}
+      />
+      <Stat
+        on:click={handleDislike}
+        active={mark === -1}
+        icon="bug"
+        value={data.bugs}
+      />
     </div>
     <button>
       <Stat icon="share" value={data.forks} />
@@ -55,6 +84,10 @@
 </article>
 
 <style>
+  header {
+    margin-bottom: 0.5rem;
+  }
+
   section {
     display: flex;
     gap: 1rem;

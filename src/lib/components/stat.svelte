@@ -6,7 +6,7 @@
   export let value: number;
 </script>
 
-<div class:active>
+<div class:active on:click>
   <Icon name={icon} />
   <span>{value}</span>
 </div>

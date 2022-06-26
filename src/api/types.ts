@@ -12,6 +12,12 @@ export interface Query {
   lang: string;
 }
 
+export interface Feedback {
+  bugs: number;
+  features: number;
+  mark: -1 | 0 | 1;
+}
+
 export type Profile = typeof nullProfile;
 export const nullProfile = {
   id: 0,
