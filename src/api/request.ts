@@ -21,6 +21,10 @@ export async function call<T>(
   signal?: AbortSignal
 ): Promise<T | void> {
   if (!("window" in globalThis)) return;
+  Object.keys(options).forEach(
+    (key) => options[key] == null && delete options[key]
+  );
+
   const sid = options["sid"];
   delete options["sid"];
 

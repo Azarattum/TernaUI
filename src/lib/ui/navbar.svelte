@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { page } from "$stores/page";
+  import { Capacitor } from "@capacitor/core";
   import { onDestroy, onMount } from "svelte";
-  /// import { browser } from "capacitor/core"; /// FIX OFFSET
+  import { ready } from "$lib/asyncable";
+  import { page } from "$api/stores";
 
   let bar: HTMLElement;
 
@@ -18,8 +19,12 @@
   onDestroy(() => observer?.disconnect());
 </script>
 
-<div bind:this={bar} class:stuck={false}>
-  <h2>{$page}</h2>
+<div
+  bind:this={bar}
+  class:stuck={false}
+  class:app={Capacitor.getPlatform() === "ios"}
+>
+  <h2>{ready($page) ? $page : ""}</h2>
 </div>
 
 <style lang="postcss">

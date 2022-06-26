@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { page } from "$stores/page";
-  import { Link } from "$lib/router";
-  import { profile } from "$stores/api";
-  import Icon from "./icon.svelte";
+  import { profile, page } from "$api/stores";
   import { ready } from "$lib/asyncable";
+  import { Link } from "$lib/router";
+  import Icon from "./icon.svelte";
 
   $: nickname = ready($profile) ? $profile.nickname : "";
 </script>
@@ -11,7 +10,7 @@
 <nav>
   <button>
     <Link to="feed">
-      <div class:active={$page == "Feed"}>
+      <div class:active={$page.toString() == "Feed"}>
         <Icon name="home" />
         <span>Feed</span>
       </div>
@@ -19,7 +18,7 @@
   </button>
   <button>
     <Link to="profile">
-      <div class:active={$page == nickname}>
+      <div class:active={$page.toString() == nickname}>
         <Icon name="user" />
         <span>{nickname} </span>
       </div>
@@ -27,7 +26,7 @@
   </button>
   <button>
     <Link to="search">
-      <div class:active={$page == "Search"}>
+      <div class:active={$page.toString() == "Search"}>
         <Icon name="search" />
         <span>Search</span>
       </div>

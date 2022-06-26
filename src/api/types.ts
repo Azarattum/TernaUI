@@ -4,6 +4,12 @@ export interface Error {
 
 export interface Login {
   user: number;
+  sid: string;
+}
+
+export interface Query {
+  text: string;
+  lang: string;
 }
 
 export type Profile = typeof nullProfile;
@@ -38,4 +44,10 @@ export const nullPost = {
     features: 1,
     forks: 4,
   },
+};
+
+export type Search = typeof nullSearch;
+export const nullSearch = {
+  users: [nullProfile],
+  posts: [nullPost],
 };

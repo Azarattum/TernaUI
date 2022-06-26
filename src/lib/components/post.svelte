@@ -21,13 +21,13 @@
   let code: HTMLElement;
 
   onMount(() => {
-    hljs.highlightBlock(code);
+    hljs.highlightElement(code);
   });
 </script>
 
 <article>
   <header>
-    <Link to="profile/{author.user}" --size="2rem">
+    <Link to="/profile/{author.user}" --size="2rem">
       <section>
         <Avatar source={author.avatar} />
         <h3>{author.nickname}</h3>

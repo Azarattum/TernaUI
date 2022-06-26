@@ -22,6 +22,7 @@ const config = {
   kit: {
     alias: {
       $stores: "src/stores",
+      $api: "src/api",
     },
     prerender: { default: true },
     adapter: adapter(),

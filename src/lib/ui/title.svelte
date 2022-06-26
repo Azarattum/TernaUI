@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { page } from "$stores/page";
+  import { ready } from "$lib/asyncable";
+  import { page } from "$api/stores";
 </script>
 
-<h1>{$page}</h1>
+<h1>{ready($page) ? $page : ""}</h1>
 
 <style>
   h1 {

@@ -3,9 +3,9 @@
   import Posts from "$lib/components/posts.svelte";
   import Spinner from "$lib/ui/spinner.svelte";
   import Title from "$lib/ui/title.svelte";
-  import { profile } from "$stores/api";
-  import Bio from "./bio.svelte";
+  import { profile, wall } from "$api/stores";
   import Stat from "./stat.svelte";
+  import Bio from "./bio.svelte";
 </script>
 
 {#await $profile}
@@ -24,7 +24,11 @@
     </div>
   </section>
   <hr />
-  <Posts user={profile.id} />
+  {#await $wall}
+    <Spinner />
+  {:then wall}
+    <Posts posts={wall} />
+  {/await}
 {/await}
 
 <style>

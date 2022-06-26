@@ -1,11 +1,21 @@
 <script>
-  import { Router, Page } from "$lib/router/";
+  import Statusbar from "$lib/ui/statusbar.svelte";
   import Profile from "./.profile/index.svelte";
+  import { Router, Page } from "$lib/router/";
+  import Navbar from "$lib/ui/navbar.svelte";
+  import { route } from "$api/stores";
+  import Tabbar from "$lib/ui/tabbar.svelte";
   import Search from "./.search.svelte";
   import Feed from "./.feed.svelte";
-  import Statusbar from "$lib/ui/statusbar.svelte";
-  import Navbar from "$lib/ui/navbar.svelte";
-  import Tabbar from "$lib/ui/tabbar.svelte";
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    route.set(location.hash);
+    window.addEventListener("hashchange", () => {
+      route.set(location.hash);
+    });
+    // login("test", "test1234");
+  });
 </script>
 
 <Router>
