@@ -4,7 +4,7 @@ import { asyncable } from "$lib/asyncable";
 import { call } from "./request";
 import { token } from "./stores";
 
-export function searchable(query: Readable<Query>) {
+export function searchable(query: Readable<Query | undefined>) {
   let cache: Post[] = [];
   let anchor: number | undefined = undefined;
 
@@ -19,6 +19,7 @@ export function searchable(query: Readable<Query>) {
   });
 
   return asyncable([token, query], async (signal, [sid, query]) => {
+    if (!query) return { users: [], posts: [] };
     const data = await request(sid, query, signal);
 
     anchor = data.posts[data.posts.length - 1].id;

@@ -1,8 +1,9 @@
 import { asyncable } from "$lib/asyncable";
 import { readable, writable } from "svelte/store";
-import { nullProfile, type Profile } from "./types";
+import { nullProfile, type Profile, type Query } from "./types";
 import { call } from "./request";
 import { postable } from "./postable";
+import { searchable } from "./searchable";
 
 const redirects: [RegExp, string][] = [
   [/#\/profile\/?(.*)?/, "/profile"],
@@ -41,7 +42,6 @@ const token = asyncable(
     return storage.getItem("sid") || "";
   },
   (_, [value]) => {
-    console.log(value);
     const storage = globalThis.localStorage;
     if (!storage) return;
     storage.setItem("sid", value);
@@ -75,8 +75,10 @@ const page = asyncable([route, profile], (_, [route, profile]) => {
   return title;
 });
 
-const wall = postable(hero);
-const feed = postable(readable(undefined));
-const search = postable(readable(undefined));
-
 export { route, token, page, profile, hero, feed, wall, search };
+
+const wall = postable(hero);
+const feed = postable(readable(undefined), true);
+
+const query = writable<Query | undefined>();
+const search = searchable(query);

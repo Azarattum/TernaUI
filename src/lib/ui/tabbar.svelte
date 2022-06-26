@@ -5,12 +5,13 @@
   import Icon from "./icon.svelte";
 
   $: nickname = ready($profile) ? $profile.nickname : "";
+  $: current = ready($page) ? $page.toString() : "";
 </script>
 
 <nav>
   <button>
     <Link to="feed">
-      <div class:active={$page.toString() == "Feed"}>
+      <div class:active={current == "Feed"}>
         <Icon name="home" />
         <span>Feed</span>
       </div>
@@ -18,7 +19,7 @@
   </button>
   <button>
     <Link to="profile">
-      <div class:active={$page.toString() == nickname}>
+      <div class:active={current == nickname}>
         <Icon name="user" />
         <span>{nickname} </span>
       </div>
@@ -26,7 +27,7 @@
   </button>
   <button>
     <Link to="search">
-      <div class:active={$page.toString() == "Search"}>
+      <div class:active={current == "Search"}>
         <Icon name="search" />
         <span>Search</span>
       </div>

@@ -6,6 +6,7 @@
   import hljs from "highlight.js";
   import { onMount } from "svelte";
 
+  export let id: number;
   export let author: { nickname: string; avatar: string; user: number };
   export let parent:
     | { post: number; nickname: string; user: number }
@@ -25,7 +26,7 @@
   });
 </script>
 
-<article>
+<article class="post-{id}">
   <header>
     <Link to="/profile/{author.user}" --size="2rem">
       <section>

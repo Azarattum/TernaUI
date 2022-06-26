@@ -1,10 +1,10 @@
 import { nullPost, type Post } from "./types";
 import type { Readable } from "svelte/store";
 import { asyncable } from "$lib/asyncable";
+import { profile, token } from "./stores";
 import { call } from "./request";
-import { token } from "./stores";
 
-export function postable(user: Readable<string | undefined>) {
+export function postable(user: Readable<string | undefined>, feed = false) {
   let cache: Post[] = [];
   let anchor: number | undefined = undefined;
 
@@ -25,8 +25,9 @@ export function postable(user: Readable<string | undefined>) {
   });
 
   const { subscribe, update: updater } = asyncable(
-    [token, user],
-    async (signal, [sid, user]) => {
+    [token, user, profile],
+    async (signal, [sid, user, profile]) => {
+      if (!feed && !user) user = profile.id.toString();
       const data = await request(sid, user, signal);
 
       anchor = data[data.length - 1].id;
