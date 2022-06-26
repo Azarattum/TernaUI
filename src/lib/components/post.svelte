@@ -52,6 +52,7 @@
       <section>
         <Avatar source={author.avatar} />
         <h3>{author.nickname}</h3>
+        <span class="lang">{data.lang}</span>
       </section>
     </Link>
     {#if parent}
@@ -140,5 +141,13 @@
 
     background: none;
     appearance: none;
+  }
+
+  .lang {
+    display: block;
+
+    width: 100%;
+
+    text-align: right;
   }
 </style>

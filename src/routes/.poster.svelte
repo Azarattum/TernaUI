@@ -13,10 +13,8 @@
   $: if ($open) panel?.click();
   else handle?.click();
 
-  let editor: HTMLElement | undefined;
   let handle: HTMLElement | undefined;
   let panel: HTMLElement | undefined;
-  let registration = false;
 
   let lang = "css";
   let text = "";
@@ -26,6 +24,8 @@
   async function handlePublish() {
     await publish(lang, text);
     $open = false;
+    lang = "css";
+    text = "";
   }
 </script>
 
@@ -41,13 +41,28 @@
   <Title text="Post" />
   <select bind:value={lang}>
     <option value="js">JavaScript</option>
+    <option value="ts">TypeScript</option>
     <option value="css">CSS</option>
+    <option value="html">HTML</option>
+    <option value="xml">XML</option>
+    <option value="cpp">C++</option>
+    <option value="c">C</option>
+    <option value="cs">C#</option>
+    <option value="python">Python</option>
+    <option value="ruby">Ruby</option>
+    <option value="rust">Rust</option>
+    <option value="sql">SQL</option>
+    <option value="php">PHP</option>
+    <option value="1c">1C</option>
+    <option value="bash">Bash</option>
+    <option value="brainfuck">Brainfuck</option>
+    <option value="avrasm">AVR Assembler</option>
+    <option value="swift">Swift</option>
+    <option value="java">Java</option>
+    <option value="kotlin">Kotlin</option>
   </select>
   <article>
-    <pre
-      bind:this={editor}
-      class="language-{lang}"
-      name="code">{@html colored}</pre>
+    <pre class="language-{lang}" name="code">{@html colored}</pre>
     <textarea bind:value={text} />
   </article>
 
