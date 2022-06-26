@@ -52,6 +52,7 @@ const profile = asyncable(
   [token, hero],
   async (signal, [sid, user]) => {
     const data = await call<Profile>("profile", { sid, user }, signal);
+    if (!data) token.set("");
     return data || nullProfile;
   },
   async (signal, [value], [sid, hero]) => {

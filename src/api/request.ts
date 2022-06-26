@@ -2,7 +2,7 @@ import { create, type GretchInstance, type GretchOptions } from "gretchen";
 import { wrn } from "$lib/utils/logger";
 import type { Error } from "./types";
 
-const base = "http://api.ternoid.ydns.eu/terna/";
+const base = "http://api.terna.ydns.eu/terna/";
 const action = (name: string) => `${base}?action=${name}`;
 const gretch = create({
   headers: {
