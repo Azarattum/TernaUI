@@ -6,6 +6,7 @@
   import hljs from "highlight.js";
   import { onMount } from "svelte";
   import { dislike, like } from "$api/functions";
+  import { post } from "../../routes/.poster.svelte";
 
   export let id: number;
   export let mark: number;
@@ -44,6 +45,15 @@
     data.features = features;
     mark = state;
   }
+
+  async function handleShare() {
+    post({
+      nickname: author.nickname,
+      post: id,
+      lang: data.lang,
+      text: data.text,
+    });
+  }
 </script>
 
 <article class="post-{id}">
@@ -79,7 +89,7 @@
       />
     </div>
     <button>
-      <Stat icon="share" value={data.forks} />
+      <Stat on:click={handleShare} icon="share" value={data.forks} />
     </button>
   </footer>
 </article>

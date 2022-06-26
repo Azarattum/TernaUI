@@ -7,13 +7,9 @@
   import Stat from "./stat.svelte";
   import Bio from "./bio.svelte";
   import Icon from "$lib/ui/icon.svelte";
-  import { open } from "../.poster.svelte";
+  import { post } from "../.poster.svelte";
 
   $: mine = $hero == undefined;
-
-  function handlePost() {
-    open.set(true);
-  }
 </script>
 
 {#await $profile}
@@ -33,7 +29,7 @@
   </section>
   <hr />
   {#if mine}
-    <button on:click={handlePost}><Icon name="plus" /></button>
+    <button on:click={() => post()}><Icon name="plus" /></button>
   {/if}
   {#await $wall}
     <Spinner />

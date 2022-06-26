@@ -1,5 +1,24 @@
-<script context="module">
-  export let open = writable(false);
+<script context="module" lang="ts">
+  let text = writable("");
+  let lang = writable("css");
+  let feat = writable<{ nickname: string; post: number } | undefined>(
+    undefined
+  );
+  let open = writable(false);
+
+  export function post(from?: {
+    nickname: string;
+    post: number;
+    text: string;
+    lang: string;
+  }) {
+    feat.set(from);
+    open.set(true);
+    if (from) {
+      text.set(from?.text);
+      lang.set(from?.lang);
+    }
+  }
 </script>
 
 <script lang="ts">
@@ -10,22 +29,19 @@
   import hljs from "highlight.js";
   import { writable } from "svelte/store";
 
-  $: if ($open) panel?.click();
-  else handle?.click();
-
   let handle: HTMLElement | undefined;
   let panel: HTMLElement | undefined;
 
-  let lang = "css";
-  let text = "";
+  $: if ($open) panel?.click();
+  else handle?.click();
 
-  $: colored = hljs.highlight(text, { language: lang }).value;
+  $: colored = hljs.highlight($text, { language: $lang }).value;
 
   async function handlePublish() {
-    await publish(lang, text);
+    await publish($lang, $text, $feat?.post);
     $open = false;
-    lang = "css";
-    text = "";
+    $lang = "css";
+    $text = "";
   }
 </script>
 
@@ -39,7 +55,10 @@
 >
   <div class="settings-handle" on:click|stopPropagation />
   <Title text="Post" />
-  <select bind:value={lang}>
+  {#if $feat}
+    <span>feat. {$feat.nickname}</span>
+  {/if}
+  <select bind:value={$lang}>
     <option value="js">JavaScript</option>
     <option value="ts">TypeScript</option>
     <option value="css">CSS</option>
@@ -62,8 +81,8 @@
     <option value="kotlin">Kotlin</option>
   </select>
   <article>
-    <pre class="language-{lang}" name="code">{@html colored}</pre>
-    <textarea bind:value={text} />
+    <pre class="language-{$lang}" name="code">{@html colored}</pre>
+    <textarea bind:value={$text} />
   </article>
 
   <button class="primary" on:click={handlePublish}>Publish</button>
@@ -165,5 +184,11 @@
     background-color: transparent;
     outline: none;
     caret-color: black;
+  }
+
+  span {
+    margin-left: 1rem;
+
+    opacity: 0.6;
   }
 </style>
